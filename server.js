@@ -17,8 +17,11 @@ server.on('message', (msg, rinfo) => {
     }
 
     if(queue[0] !== rinfo.address || queue[1] !== rinfo.port) {
-        server.send(`${rinfo.address}:${rinfo.port}`, queue[1], queue[0])
-        server.send(`${queue[0]}:${queue[1]}`, rinfo.port, rinfo.address)
+        let qaddress = (queue[0] !== rinfo.address) ? queue[0] : '127.0.0.1'
+        let raddress = (queue[0] !== rinfo.address) ? rinfo.address : '127.0.0.1'
+
+        server.send(`${raddress}:${rinfo.port}`, queue[1], qaddress)
+        server.send(`${qaddress}:${queue[1]}`, rinfo.port, raddress)
         queue = null
     } else {
         queue = [rinfo.address, rinfo.port]
