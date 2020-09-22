@@ -15,6 +15,11 @@ server.on('message', (msg, rinfo) => {
         address = msg.toString().split(':')[0]
         port = msg.toString().split(':')[1]
 
+        if(address === 'lan') {
+            // Scan across lan
+            return
+        }
+
         server.send('Connection established!', port, address)
 
         established = true
@@ -24,6 +29,9 @@ server.on('message', (msg, rinfo) => {
         }
     }
 });
+
+
+ // Stuff
 
 server.bind((Math.random() * 1000) + 40000)
 
